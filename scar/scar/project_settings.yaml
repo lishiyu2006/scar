@@ -1,0 +1,172 @@
+# project_settings.yaml - scAR project parameters
+#liver
+#pancrease
+#pbmc
+#main
+# I/O configuration
+main_input_path: "data/pbmc/matrix.mtx"         # Input expression matrix path; supported: csv, tsv, mtx, h5ad, loom, rds, npy
+main_output_dir: "results"                        # Output directory
+save_intermediate: false                    # Whether to save intermediate files (e.g., intermediate HDF5)
+
+# Data loading parameters
+batch_size: 2000                            # Number of cells per batch (column chunk size)
+csv_sep: ","                                # CSV delimiter; use "\t" for TSV
+sparse_threshold: 0.001                     # Sparse gene filter threshold (proportion of cells expressing the gene)
+
+# Preprocessing
+binarization_threshold: 0.0                 # Expression > threshold set to 1, otherwise 0
+
+# GPU configuration
+use_gpu: true                               # Enable GPU computation
+gpu_id: 0                                   # GPU device ID to use
+
+# Association rule metric settings
+# Chunk parameters (avoid OOM)
+chunk_size: 1000                            # Number of genes per chunk when computing conviction/lift
+
+thresholds:
+  support: 0.01
+  confidence: 0.6
+  lift: 1.1
+  leverage: 0.001
+  conviction: 1.4
+
+
+
+
+
+
+#liver
+#pancrease
+#pbmc
+
+#go_and_kegg
+
+# Input CSV directory; first and second columns are gene names
+#input_dir: "./results/pbmc"
+input_dir: "./DEG_and_results/pbmc"
+
+# Organism name; determines enrichment databases (supports Human, Mouse, etc.)
+species: "Human"
+
+# Number of genes per analysis batch to limit resource usage
+analysis_batch_size: 100
+
+# Output directory for GO and KEGG results
+output_dir: "./Enrichment_result_og"
+
+# Gene set database for GO enrichment (replace with other versions/categories)
+go_gene_sets:
+  - "GO_Biological_Process_2021"
+
+# Gene set database for KEGG enrichment
+kegg_gene_sets:
+  - "KEGG_2021_Human"
+
+# Max number of significant pathways to output, sorted by adjusted p-value
+top_n: 10
+
+enrichment_mode: "module"
+
+
+
+#ppi
+# configuration_manager.py
+ppi_output_dir: "./ppi_result"
+# PPI file path
+PPI_FILE : "interaction_data/ppi/PP-Decagon_ppi.csv"
+
+# Whether input file has header row
+HAS_HEADER : False
+
+# Visualization option (only suitable for small networks)
+VISUALIZE : False
+
+# Number of top hubs to output
+TOP_HUB_NUM : 10
+
+ppi_GENE_FILE : "data/pbmc/genes.tsv"
+ppi_input_dir: "./results/pbmc"
+
+
+
+
+
+#liver
+#pancrease
+#pbmc
+
+# reactome
+# AR input directory
+reactome_input_dir: "./results"
+
+# Pathway mapping file
+reactome_pathway_file: "./interaction_data/reactome/FIsInGene_070323_with_annotations.txt"
+
+# Metrics list
+metrics:
+  - support
+  - confidence
+  - leverage
+  - conviction
+  - lift
+
+# Results output directory
+reactome_output_dir: "./reactome_results"
+
+# P-value threshold for significance (P < 0.05)
+pvalue_threshold: 0.05
+
+
+
+
+
+#tf
+TF_input_dir: "./results"
+TF_pathway_file: "./interaction_data/tf/new_kegg.human.reg.direction.txt"
+TF_output_dir: "./TF_results"
+sampling_interval : 5
+filter_interval : 10
+#liver
+#pancrease
+#pbmc
+
+
+
+
+#degs
+# Input data directory; must contain matrix.mtx / genes.tsv / barcodes.tsv
+degs_data_dir: "./data/pancrease"
+
+# Differential expression analysis parameters
+de_method: "wilcoxon"      # Options: t-test_overestim_var, wilcoxon, logreg
+min_genes: 200             # Minimum genes expressed per cell
+min_cells: 3               # Minimum number of cells a gene must be expressed in
+normalize_target_sum: 1e4  # Normalization target sum
+
+# Output directory
+degs_output_dir: "./DEG_results"
+
+
+
+
+#liver
+#pancrease
+#pbmc
+#dges_and_results
+assoc_rules_file: "./results/pbmc"
+degs_file: "./DEG_results/pbmc"
+output_base_dir: "./DEG_and_results"
+
+
+
+
+
+# Module community
+# Core output directory configuration
+com_deg_dir: "./DEG_and_results"  # Base directory for DEG (differentially expressed genes) results; code default "../DEG_results"
+com_ppi_output_dir: "./ppi_result"  # Base directory for PPI (protein-protein interaction) results; code default "../ppi_results"
+
+# Data and result directories
+co_data: "data"                   # Directory for gene-related data; code default "data"
+co_result: "module_results"       # Output directory for module analysis results; code default "module_results"
